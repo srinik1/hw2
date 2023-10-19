@@ -81,7 +81,28 @@ public class ExpenseTrackerView extends JFrame {
     setVisible(true);
   
   }
-  public void refreshTable(List<Transaction> transactions) {
+
+  private void setTableRenderer(TransactionFilter filter) {
+    transactionsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+      @Override
+      public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        if (filter != null && row < table.getRowCount() - 1) { // -1 to exclude the "Total" row
+          Transaction t = new Transaction((double) table.getValueAt(row, 1), (String) table.getValueAt(row, 2));
+          if (filter.filter(Arrays.asList(t)).size() > 0) {
+            c.setBackground(new Color(173, 255, 168));
+          } else {
+            c.setBackground(table.getBackground());
+          }
+        } else {
+          c.setBackground(table.getBackground());
+        }
+        return c;
+      }
+    });
+  }
+
+  public void refreshTable(List<Transaction> transactions, TransactionFilter filter) {
       // Clear existing rows
       model.setRowCount(0);
       // Get row count
@@ -101,6 +122,8 @@ public class ExpenseTrackerView extends JFrame {
   
       // Fire table update
       transactionsTable.updateUI();
+
+    setTableRenderer(filter);
   }
   public JButton getAddTransactionBtn() {
     return addTransactionBtn;

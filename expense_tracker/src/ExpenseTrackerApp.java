@@ -7,7 +7,11 @@ import view.ExpenseTrackerView;
 import model.Transaction;
 import controller.InputValidation;
 
+import java.util.logging.Logger;
+
 public class ExpenseTrackerApp {
+  private static Logger LoggerFactory;
+  private static final Logger LOGGER = LoggerFactory.getLogger(String.valueOf(ExpenseTrackerApp.class));
 
   public static void main(String[] args) {
     
@@ -34,6 +38,9 @@ public class ExpenseTrackerApp {
       }
     });
 
+    //Handle apply filter button clicks
+    view.getFilterBtn().addActionListener(e -> {
+      controller.applyFilter();
+    });
   }
-
 }
