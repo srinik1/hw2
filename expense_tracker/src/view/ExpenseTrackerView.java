@@ -17,10 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A graphical user interface for the Expense Tracker application.
- * <p>
- * This view provides components to display, add, and filter transactions.
- * </p>
+ * The User interface for the Expense Tracker application which contains components to display, add or filter a transaction.
  */
 public class ExpenseTrackerView extends JFrame {
 
@@ -38,7 +35,6 @@ public class ExpenseTrackerView extends JFrame {
   private JButton filterBtn;
   /** Dropdown to select the type of filter to apply. */
   private JComboBox<String> filterTypeComboBox;
-  /** Field to input the value for filtering transactions. */
   private JTextField filterValueField;
   
   /**
@@ -49,7 +45,13 @@ public class ExpenseTrackerView extends JFrame {
     setSize(600, 400); // Make GUI larger
 
     String[] columnNames = {"Serial Number", "Amount", "Category", "Date"};
-    this.model = new DefaultTableModel(columnNames, 0);
+    this.model = new DefaultTableModel(columnNames, 0) {
+      @Override
+      public boolean isCellEditable(int row, int column) {
+          // All cells are not editable
+          return false;
+      }
+  };
 
     addTransactionBtn = new JButton("Add Transaction");
 
@@ -104,22 +106,28 @@ public class ExpenseTrackerView extends JFrame {
   /**
    * Configures the table renderer based on the provided filter.
    *
-   * @param filter The transaction filter to be applied.
+   * @param filter The transaction filter which needs to be applied.
    */
   private void setTableRenderer(TransactionFilter filter) {
     transactionsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
       @Override
       public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        if (filter != null && row < table.getRowCount() - 1) { // -1 to exclude the "Total" row
-          Transaction t = new Transaction((double) table.getValueAt(row, 1), (String) table.getValueAt(row, 2));
-          if (filter.filter(Arrays.asList(t)).size() > 0) {
-            c.setBackground(new Color(173, 255, 168));
-          } else {
-            c.setBackground(table.getBackground());
-          }
+        if (isSelected) {
+            c.setBackground(table.getSelectionBackground());
+            c.setForeground(table.getSelectionForeground());
         } else {
-          c.setBackground(table.getBackground());
+            if (filter != null && row < table.getRowCount() - 1) { // -1 to exclude the "Total" row
+                Transaction t = new Transaction((double) table.getValueAt(row, 1), (String) table.getValueAt(row, 2));
+                if (filter.filter(Arrays.asList(t)).size() > 0) {
+                    c.setBackground(new Color(173, 255, 168)); 
+                } else {
+                    c.setBackground(table.getBackground());
+                }
+            } else {
+                c.setBackground(table.getBackground());
+            }
+            c.setForeground(table.getForeground()); // This sets the default text color
         }
         return c;
       }
@@ -127,7 +135,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * Refreshes the transaction table based on the provided list of transactions and filter.
+   * Refreshes the transaction table with the latest list of transactions and filter.
    *
    * @param transactions The list of transactions to be displayed.
    * @param filter       The filter to be applied on the transactions.
@@ -164,7 +172,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * @return The table model for transactions.
+   * @return The basic table model for transactions.
    */
   public DefaultTableModel getTableModel() {
     return model;
@@ -179,7 +187,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * @return The value entered in the amount field.
+   * @return The value entered by the user in the amount field.
    */
   public double getAmountField() {
     if(amountField.getText().isEmpty()) {
@@ -191,7 +199,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * Sets the formatted text field for the transaction amount.
+   * Sets the amount field .
    * 
    * @param amountField The formatted text field to set.
    */
@@ -200,7 +208,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * Retrieves the category input from the category field.
+   * Gets the category input from the category field.
    * 
    * @return The category input.
    */
@@ -209,7 +217,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * Sets the category field for transaction input.
+   * Sets the category field.
    * 
    * @param categoryField The category text field to set.
    */
@@ -218,14 +226,14 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * @return The button for filtering transactions.
+   * @return filtering transactions button.
    */
   public JButton getFilterBtn() {
     return filterBtn;
   }
 
   /**
-   * Retrieves the selected type of filter from the dropdown.
+   * Gets the user selected filter.
    * 
    * @return The selected filter type.
    */
@@ -234,7 +242,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   /**
-   * Retrieves the value input for filtering transactions.
+   * Retrieves the value for filtering transactions.
    * 
    * @return The input value for filtering.
    */
