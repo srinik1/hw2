@@ -113,15 +113,21 @@ public class ExpenseTrackerView extends JFrame {
       @Override
       public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        if (filter != null && row < table.getRowCount() - 1) { // -1 to exclude the "Total" row
-          Transaction t = new Transaction((double) table.getValueAt(row, 1), (String) table.getValueAt(row, 2));
-          if (filter.filter(Arrays.asList(t)).size() > 0) {
-            c.setBackground(new Color(173, 255, 168));
-          } else {
-            c.setBackground(table.getBackground());
-          }
+        if (isSelected) {
+            c.setBackground(table.getSelectionBackground());
+            c.setForeground(table.getSelectionForeground());
         } else {
-          c.setBackground(table.getBackground());
+            if (filter != null && row < table.getRowCount() - 1) { // -1 to exclude the "Total" row
+                Transaction t = new Transaction((double) table.getValueAt(row, 1), (String) table.getValueAt(row, 2));
+                if (filter.filter(Arrays.asList(t)).size() > 0) {
+                    c.setBackground(new Color(173, 255, 168)); 
+                } else {
+                    c.setBackground(table.getBackground());
+                }
+            } else {
+                c.setBackground(table.getBackground());
+            }
+            c.setForeground(table.getForeground()); // This sets the default text color
         }
         return c;
       }
