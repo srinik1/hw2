@@ -93,12 +93,20 @@ public class ExpenseTrackerController {
     if(filterType == "Amount"){
       try{
         double amount = Double.parseDouble(filterValue);
-        filter = new AmountFilter(amount);
+        if(controller.InputValidation.isValidAmount(amount)){
+          filter = new AmountFilter(amount);
+        }else{
+          view.invalidAmountInput();
+        }
       }catch (NumberFormatException e){
         System.out.println("Invalid Amount format");
       }
     } else if (filterType == "Category") {
-        filter = new CategoryFilter(filterValue);
+        if(controller.InputValidation.isValidCategory(filterValue)){
+          filter = new CategoryFilter(filterValue);
+        }else{
+          view.invalidCategoryInput();
+        }
     }else{
       System.out.println("Unknown Filter type");
     }

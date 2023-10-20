@@ -241,4 +241,16 @@ public class ExpenseTrackerView extends JFrame {
   public String getFilterValue() {
     return filterValueField.getText();
   }
+  /**
+   * Displays an error message in case an invalid amount is entered.
+   */
+  public void invalidAmountInput(){
+    JOptionPane.showMessageDialog(null, "Please enter a value between 0 and 1000");
+  }
+  /**
+   * Displays an error message in case an invalid category is entered.
+   */
+  public void invalidCategoryInput(){
+    JOptionPane.showMessageDialog(null, "Please enter a category from the following list : \"food\", \"travel\", \"bills\", \"entertainment\", \"other\"");
+  }
 }
