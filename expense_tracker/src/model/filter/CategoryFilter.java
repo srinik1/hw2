@@ -3,6 +3,9 @@ import model.Transaction;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class implements the TransactionFilter and updates the view with the selected Category filter.
+ */
 public class CategoryFilter implements TransactionFilter{
     private String category;
 

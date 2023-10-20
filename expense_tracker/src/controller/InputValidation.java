@@ -1,22 +1,19 @@
 /**
- * Package responsible for validating various inputs for the Expense Tracker application.
+ * This package is responsible for checking the input amount and category entered by the user.
  */
 package controller;
 
 import java.util.Arrays;
 
 /**
- * Utility class for validating inputs related to transactions.
- * <p>
- * This class provides static methods to check the validity of transaction amounts and categories.
- * </p>
+ * This class provides static methods to run validations against the entered amounts and categories.
  */
 public class InputValidation {
 
   /**
    * Validates if the provided amount is within acceptable limits.
    *
-   * @param amount The transaction amount to be validated.
+   * @param amount Transaction amount to be validated.
    * @return {@code true} if the amount is valid; {@code false} otherwise.
    */
   public static boolean isValidAmount(double amount) {
@@ -35,11 +32,7 @@ public class InputValidation {
   }
 
   /**
-   * Validates if the provided category matches predefined criteria.
-   * <p>
-   * A valid category is non-null, non-empty, contains only alphabetic characters,
-   * and matches a set of predefined valid words.
-   * </p>
+   * Validates if the provided category matches with the predefined validWords.
    *
    * @param category The category string to be validated.
    * @return {@code true} if the category is valid; {@code false} otherwise.
