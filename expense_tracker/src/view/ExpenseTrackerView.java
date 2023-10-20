@@ -1,3 +1,6 @@
+/**
+ * Package responsible for providing the view component for the Expense Tracker application.
+ */
 package view;
 
 import javax.swing.*;
@@ -13,23 +16,39 @@ import model.filter.TransactionFilter;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A graphical user interface for the Expense Tracker application.
+ * <p>
+ * This view provides components to display, add, and filter transactions.
+ * </p>
+ */
 public class ExpenseTrackerView extends JFrame {
 
+  /** Table to display transactions. */
   private JTable transactionsTable;
+  /** Button to initiate the addition of a transaction. */
   private JButton addTransactionBtn;
+  /** Field to input the transaction amount. */
   private JFormattedTextField amountField;
+  /** Field to input the transaction category. */
   private JTextField categoryField;
+  /** Model for handling data in the transactionsTable. */
   private DefaultTableModel model;
+  /** Button to apply filtering on transactions. */
   private JButton filterBtn;
+  /** Dropdown to select the type of filter to apply. */
   private JComboBox<String> filterTypeComboBox;
+  /** Field to input the value for filtering transactions. */
   private JTextField filterValueField;
   
-
+  /**
+   * Constructs the main view for the Expense Tracker application.
+   */
   public ExpenseTrackerView() {
     setTitle("Expense Tracker"); // Set title
     setSize(600, 400); // Make GUI larger
 
-    String[] columnNames = {"serial", "Amount", "Category", "Date"};
+    String[] columnNames = {"Serial Number", "Amount", "Category", "Date"};
     this.model = new DefaultTableModel(columnNames, 0);
 
     addTransactionBtn = new JButton("Add Transaction");
@@ -82,6 +101,11 @@ public class ExpenseTrackerView extends JFrame {
   
   }
 
+  /**
+   * Configures the table renderer based on the provided filter.
+   *
+   * @param filter The transaction filter to be applied.
+   */
   private void setTableRenderer(TransactionFilter filter) {
     transactionsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
       @Override
@@ -102,6 +126,12 @@ public class ExpenseTrackerView extends JFrame {
     });
   }
 
+  /**
+   * Refreshes the transaction table based on the provided list of transactions and filter.
+   *
+   * @param transactions The list of transactions to be displayed.
+   * @param filter       The filter to be applied on the transactions.
+   */
   public void refreshTable(List<Transaction> transactions, TransactionFilter filter) {
       // Clear existing rows
       model.setRowCount(0);
@@ -125,17 +155,32 @@ public class ExpenseTrackerView extends JFrame {
 
     setTableRenderer(filter);
   }
+
+  /**
+   * @return The button for adding a new transaction.
+   */
   public JButton getAddTransactionBtn() {
     return addTransactionBtn;
   }
+
+  /**
+   * @return The table model for transactions.
+   */
   public DefaultTableModel getTableModel() {
     return model;
   }
+
   // Other view methods
-    public JTable getTransactionsTable() {
+  /**
+ * @return The transactions table.
+ */
+  public JTable getTransactionsTable() {
     return transactionsTable;
   }
 
+  /**
+   * @return The value entered in the amount field.
+   */
   public double getAmountField() {
     if(amountField.getText().isEmpty()) {
       return 0;
@@ -145,27 +190,54 @@ public class ExpenseTrackerView extends JFrame {
     }
   }
 
+  /**
+   * Sets the formatted text field for the transaction amount.
+   * 
+   * @param amountField The formatted text field to set.
+   */
   public void setAmountField(JFormattedTextField amountField) {
     this.amountField = amountField;
   }
 
-  
+  /**
+   * Retrieves the category input from the category field.
+   * 
+   * @return The category input.
+   */
   public String getCategoryField() {
     return categoryField.getText();
   }
 
+  /**
+   * Sets the category field for transaction input.
+   * 
+   * @param categoryField The category text field to set.
+   */
   public void setCategoryField(JTextField categoryField) {
     this.categoryField = categoryField;
   }
 
+  /**
+   * @return The button for filtering transactions.
+   */
   public JButton getFilterBtn() {
     return filterBtn;
   }
 
+  /**
+   * Retrieves the selected type of filter from the dropdown.
+   * 
+   * @return The selected filter type.
+   */
   public String getSelectedFilterType() {
     return (String) filterTypeComboBox.getSelectedItem();
   }
 
+  /**
+   * Retrieves the value input for filtering transactions.
+   * 
+   * @return The input value for filtering.
+   */
   public String getFilterValue() {
     return filterValueField.getText();
   }

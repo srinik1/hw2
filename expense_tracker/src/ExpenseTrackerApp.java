@@ -9,10 +9,22 @@ import controller.InputValidation;
 
 import java.util.logging.Logger;
 
+/**
+ * The main application class for the Expense Tracker.
+ * This class initializes and coordinates the model, view, and controller components 
+ * of the Expense Tracker application.
+ */
 public class ExpenseTrackerApp {
+  /** The logger factory to create logger instances. */
   private static Logger LoggerFactory;
+  /** Logger for recording runtime events and issues. */
   private static final Logger LOGGER = LoggerFactory.getLogger(String.valueOf(ExpenseTrackerApp.class));
 
+  /**
+   * The main entry point of the Expense Tracker application.
+   * 
+   * @param args The command-line arguments.
+   */
   public static void main(String[] args) {
     
     // Create MVC components
