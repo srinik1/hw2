@@ -20,6 +20,7 @@ public class ExpenseTrackerApp {
   private static final Logger LOGGER = LoggerFactory.getLogger(String.valueOf(ExpenseTrackerApp.class));
 
   /**
+   * Main Class
    * 
    * @param args The command-line arguments.
    */
